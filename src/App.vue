@@ -1,5 +1,11 @@
 <template>
   <v-app>
+    <v-app-bar
+      app
+      v-if="haveBar"
+    >
+    </v-app-bar>
+
     <v-main>
       <router-view />
     </v-main>
@@ -14,12 +20,11 @@ export default {
   data: () => ({
     //
   }),
+
+  computed: {
+    haveBar() {
+      return !["Home"].includes(this.$route.name);
+    }
+  }
 };
 </script>
-
-<style>
-#app {
-  background: url('./assets/image.jpg') no-repeat center center fixed !important;
-  background-size: cover;
-}
-</style>
