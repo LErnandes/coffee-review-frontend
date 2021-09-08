@@ -22,7 +22,7 @@
 export default {
   name: "Carousel",
   props: {
-      items: Array
+    items: Array
   },
 };
 </script>
