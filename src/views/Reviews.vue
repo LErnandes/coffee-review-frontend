@@ -1,54 +1,46 @@
 <template>
   <v-container fluid fill-height>
-    <v-row class="my-4" justify="center">
-      <h1 class="display-2 font-weight-black">Reviews</h1>
-    </v-row>
-
-    <v-row class="my-5" justify="center">
-      <v-col lg="8">
+    <v-row class="my-10" justify="center">
+      <v-col cols="11" sm="10" lg="8">
         <carousel :items="reviews"></carousel>
       </v-col>
     </v-row>
 
     <v-row justify="space-around">
-      <v-col v-for="review of reviews" :key="review.id" cols="8" sm="4" lg="3">
-        <v-card transition="fade-transition" class="my-2 mx-auto">
+      <v-col
+        v-for="review of reviews"
+        :key="review.id"
+        cols="8"
+        sm="4"
+        lg="4"
+        class="text-center"
+      >
+        <v-card transition="fade-transition" class="mx-auto">
           <v-img :src="review.image"></v-img>
 
-          <v-card-title>{{ review.name }}</v-card-title>
+          <v-card-title>
+            <span class="text-h6 font-weight-light">{{ review.title }}</span>
+          </v-card-title>
 
-          <v-card-text>
-            <v-row justify="center" align="center" class="mx-0">
-              <v-col cols="12" lg="5">
-                <v-rating
-                  :value="review.rating"
-                  color="amber"
-                  dense
-                  half-increments
-                  readonly
-                  size="14"
-                ></v-rating>
-
-                <div class="grey--text ms-4">
-                  {{ review.rating }} ({{ review.ratingCount }})
-                </div>
-              </v-col>
-              <v-col class="text-center" cols="12" lg="6">
-                <div class="my-4 text-subtitle-1">
-                  {{ review.priceRating }} • {{ review.company }}
-                </div>
-              </v-col>
-            </v-row>
+          <v-card-text class="text-h5 font-weight-bold">
+            "{{ review.text }}"
           </v-card-text>
 
           <v-card-actions>
-            <v-btn
-              color="deep-purple lighten-2"
-              :href="'/review/'+review.id"
-              text
-            >
-              Read review
-            </v-btn>
+            <v-list-item>
+              <v-row align="center">
+                <v-col class="text-start" cols="6" lg="8">
+                  <h4>Luis Ernandes</h4>
+                </v-col>
+
+                  <v-col v-if="isAdmin" cols="2">
+                    <v-btn icon><v-icon>mdi-pencil</v-icon></v-btn>
+                  </v-col>
+                  <v-col v-if="isAdmin" cols="2">
+                    <v-btn color="red" icon><v-icon>mdi-delete</v-icon></v-btn>
+                  </v-col>
+              </v-row>
+            </v-list-item>
           </v-card-actions>
         </v-card>
       </v-col>
@@ -57,14 +49,15 @@
 </template>
 
 <script>
-import carousel from '@/components/Carousel.vue';
+import carousel from "@/components/Carousel.vue";
 
 export default {
   name: "Reviews",
   components: {
-    carousel
+    carousel,
   },
   data: () => ({
+    isAdmin: true,
     isActive: false,
     reviews: [
       {
@@ -83,6 +76,8 @@ export default {
           aroma: 4,
           aftertaste: 4,
         },
+        text: "Café muito bom",
+        author: "Luis Ernandes",
       },
       {
         id: "1234567891",
@@ -100,6 +95,8 @@ export default {
           aroma: 4,
           aftertaste: 4,
         },
+        text: "Café muito bom",
+        author: "Luis Ernandes",
       },
     ],
   }),

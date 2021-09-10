@@ -10,7 +10,7 @@
       >
         <v-container fluid fill-height>
           <v-row align="end" justify="center">
-            <h1 class="display-2 font-weight-black">{{ item.name }}</h1>
+            <h1 class="text-center display-2 font-weight-black">{{ item.name }}</h1>
           </v-row>
         </v-container>
       </v-carousel-item>

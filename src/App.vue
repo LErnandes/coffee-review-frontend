@@ -5,9 +5,14 @@
 
       <v-spacer></v-spacer>
 
+      <v-btn href="/admin" class="ma-2">
+        ADMIN
+        <v-icon right dark> mdi-account </v-icon>
+      </v-btn>
+
       <v-dialog v-model="dialog" width="500">
         <template v-slot:activator="{ on, attrs }">
-          <v-btn class="ma-2 white--text" v-bind="attrs" v-on="on">
+          <v-btn color="error" class="ma-2" v-bind="attrs" v-on="on">
             DONATE
             <v-icon right dark> mdi-hand-heart </v-icon>
           </v-btn>
@@ -29,7 +34,9 @@
 
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn color="success" text @click="dialog = false"> DONE <v-icon>mdi-party-popper</v-icon> </v-btn>
+            <v-btn color="success" text @click="dialog = false">
+              DONE <v-icon>mdi-party-popper</v-icon>
+            </v-btn>
           </v-card-actions>
         </v-card>
       </v-dialog>
@@ -43,7 +50,7 @@
 
 <script>
 export default {
-  title: "Coffee Blog",
+  title: "Coffee Experience",
   name: "App",
 
   data: () => ({

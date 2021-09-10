@@ -4,8 +4,11 @@
       <h1 class="text-center">
         <span class="font-weight-light display-1">WELCOME TO</span>
         <br />
-        <span class="font-weight-black display-3">COFFEE BLOG</span>
+        <span class="font-weight-black display-3">COFFEE EXPERIENCE</span>
       </h1>
+    </v-row>
+    <v-row justify="center">
+      <h2 class="display-1">Contando as minhas experiencias com café ☕️</h2>
     </v-row>
     <v-row justify="center">
       <v-btn href="/reviews" x-large color="error"> LER ARTIGOS! </v-btn>
