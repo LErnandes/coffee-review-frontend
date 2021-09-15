@@ -5,7 +5,7 @@
         v-for="item of items"
         :key="item.id"
         :src="item.image"
-        :href="'/review/'+item.id"
+        :href="'#'+item.id"
         ripple
       >
         <v-container fluid fill-height>
