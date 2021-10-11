@@ -1,6 +1,6 @@
 <template>
   <v-container fluid fill-height>
-    <v-row class="my-10" justify="center">
+    <v-row v-if="reviews.length > 0" class="my-10" justify="center">
       <v-col cols="11" sm="10" lg="8">
         <carousel :items="reviews"></carousel>
       </v-col>
@@ -10,8 +10,8 @@
       <v-col
         v-for="review of reviews"
         :key="review.id"
-        cols="8"
-        sm="4"
+        cols="12"
+        sm="5"
         lg="4"
         class="text-center"
       >
@@ -19,21 +19,9 @@
           <v-img :src="review.image"></v-img>
 
           <v-card-title>
-            <v-row justify="space-between">
-              <v-col lg="8">
-                <span class="text-h6 font-weight-black">{{ review.name }}</span>
-              </v-col>
-
-              <v-col lg="4">
-                <v-rating
-                  background-color="grey darken-1"
-                  :value="review.priceRating"
-                  full-icon="$"
-                  empty-icon="$"
-                  color="green"
-                  readonly
-                  dense
-                ></v-rating>
+            <v-row justify="center">
+              <v-col lg="12">
+                <span class="text-h4 text-center font-weight-black">{{ review.name }}</span>
               </v-col>
             </v-row>
           </v-card-title>
@@ -54,10 +42,16 @@
                 ></v-rating>
               </v-col>
 
-              <v-col lg="3">
-                <span class="title">
-                  {{ review.rating }} ({{ review.ratingCount }})
-                </span>
+              <v-col lg="4">
+                <v-rating
+                  background-color="grey darken-1"
+                  :value="review.priceRating"
+                  full-icon="$"
+                  empty-icon="$"
+                  color="green"
+                  readonly
+                  dense
+                ></v-rating>
               </v-col>
             </v-row>
           </v-card-text>
@@ -229,7 +223,6 @@ export default {
         image: "https://cdn.vuetifyjs.com/images/cards/cooking.png",
         name: "Santa Monica Café Gourmet",
         rating: 4.2,
-        ratingCount: 567,
         priceRating: 4,
         text: "Café muito bom",
         author: "Luis Ernandes",
@@ -239,7 +232,6 @@ export default {
         image: "https://cdn.vuetifyjs.com/images/cards/cooking.png",
         name: "Santa Monica Café Gourmet",
         rating: 4.2,
-        ratingCount: 567,
         priceRating: 1,
         text: "Café muito bom",
         author: "Luis Ernandes",

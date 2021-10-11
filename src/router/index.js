@@ -3,6 +3,8 @@ import VueRouter from "vue-router";
 import Home from "../views/Home.vue";
 import Reviews from "../views/Reviews.vue";
 import Admin from "../views/Admin.vue";
+import Lofi from "../views/Lofi.vue";
+
 
 Vue.use(VueRouter);
 
@@ -23,9 +25,14 @@ const routes = [
     component: Admin,
   },
   {
+    path: "/lofi",
+    name: "Lofi",
+    component: Lofi,
+  },
+  {
     path: "*",
     name: "404",
-    redirect: "/reviews",
+    redirect: "/",
   },
 ];
 

@@ -1,5 +1,5 @@
 <template>
-  <v-container class="back" fluid fill-height>
+  <v-container fluid fill-height>
     <v-carousel cycle show-arrows-on-hover hide-delimiters>
       <v-carousel-item
         v-for="item of items"

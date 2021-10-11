@@ -1,9 +1,10 @@
 <template>
   <v-app>
-    <v-app-bar app v-if="haveBar">
-      <v-btn fab href="/reviews" text><v-icon>mdi-home</v-icon></v-btn>
-
-      <v-spacer></v-spacer>
+    <v-app-bar app v-if="notLading">
+      <v-tabs>
+        <v-tab to="/reviews">Review</v-tab>
+        <v-tab to="/lofi">Lofi Coffee</v-tab>
+      </v-tabs>
 
       <v-btn href="/admin" class="ma-2">
         ADMIN
@@ -45,6 +46,12 @@
     <v-main>
       <router-view />
     </v-main>
+
+    <v-footer class="mt-15">
+      <v-col class="text-center" cols="12">
+        {{ new Date().getFullYear() }} — <strong>Luis Ernandes</strong>
+      </v-col>
+    </v-footer>
   </v-app>
 </template>
 
@@ -70,7 +77,7 @@ export default {
   }),
 
   computed: {
-    haveBar() {
+    notLading() {
       return !["Home"].includes(this.$route.name);
     },
   },
