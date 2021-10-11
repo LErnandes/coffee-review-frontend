@@ -64,14 +64,8 @@ export default {
     dialog: false,
     donateMethods: [
       {
-        id: "123213312",
-        name: "Pix",
-        code: "66a5c991417c863018de5ad31",
-      },
-      {
-        id: "123213312",
-        name: "Pix",
-        code: "66a5c991417c863018de5ad31",
+        name: "Nano",
+        code: "nano_1bxo4uox6wjn8kg7jd73q46d6nencx5fowrmx8xytp141ouy8iqyasr8wbj6",
       },
     ],
   }),

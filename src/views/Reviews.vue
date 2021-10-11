@@ -108,7 +108,7 @@
           </v-toolbar-items>
         </v-toolbar>
 
-        <v-row class="mt-6" justify="center">
+        <v-row class="mt-15" justify="center">
           <v-col cols="10" lg="6">
             <v-card color="#385F73">
               <v-card-title class="display-1 font-weight-black ml-3 py-6">
@@ -189,6 +189,12 @@
                   ></v-file-input>
                 </v-col>
               </v-row>
+
+              <v-row justify="end">
+                <v-col cols="2">
+                  <v-btn color="error" class="mb-2">Salvar</v-btn>
+                </v-col>
+              </v-row>
             </v-card>
           </v-col>
         </v-row>
@@ -206,7 +212,7 @@ export default {
     carousel,
   },
   data: () => ({
-    isAdmin: true,
+    isAdmin: false,
     dialog: false,
 
     id: "",
