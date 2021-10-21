@@ -9,14 +9,14 @@
     <v-row justify="space-around">
       <v-col
         v-for="review of reviews"
-        :key="review.id"
+        :key="review._id"
         cols="12"
         sm="5"
         lg="4"
         class="text-center"
       >
-        <v-card :id="review.id" transition="fade-transition" class="mx-auto">
-          <v-img :src="review.image"></v-img>
+        <v-card :id="review._id" transition="fade-transition" class="mx-auto">
+          <v-img class="reviewimage h500" :src="review.image"></v-img>
 
           <v-card-title>
             <v-row justify="center">
@@ -34,7 +34,7 @@
             <v-row align="center" justify="space-around">
               <v-col lg="5">
                 <v-rating
-                  :value="review.rating"
+                  v-model="review.rating"
                   color="amber"
                   dense
                   half-increments
@@ -45,7 +45,7 @@
               <v-col lg="4">
                 <v-rating
                   background-color="grey darken-1"
-                  :value="review.priceRating"
+                  v-model="review.priceRating"
                   full-icon="$"
                   empty-icon="$"
                   color="green"
@@ -64,10 +64,10 @@
                 </v-col>
 
                 <v-col v-if="isAdmin" cols="2">
-                  <v-btn icon><v-icon>mdi-pencil</v-icon></v-btn>
+                  <v-btn @click="editPost(review)" icon><v-icon>mdi-pencil</v-icon></v-btn>
                 </v-col>
                 <v-col v-if="isAdmin" cols="2">
-                  <v-btn color="red" icon><v-icon>mdi-delete</v-icon></v-btn>
+                  <v-btn @click="deletePost(review._id)" color="red" icon><v-icon>mdi-delete</v-icon></v-btn>
                 </v-col>
               </v-row>
             </v-list-item>
@@ -98,13 +98,13 @@
       </template>
       <v-card>
         <v-toolbar dark color="primary">
-          <v-btn icon dark @click="dialog = false">
+          <v-btn icon dark @click="exitDialog">
             <v-icon>mdi-close</v-icon>
           </v-btn>
           <v-toolbar-title>New Post</v-toolbar-title>
           <v-spacer></v-spacer>
           <v-toolbar-items>
-            <v-btn dark text @click="dialog = false"> Save </v-btn>
+            <v-btn dark text @click="savePost"> Save </v-btn>
           </v-toolbar-items>
         </v-toolbar>
 
@@ -118,7 +118,7 @@
               <v-card-text v-if="image" class="my-10">
                 <v-row justify="center">
                   <v-col lg="8">
-                    <v-img :src="image"></v-img>
+                    <v-img class="reviewimage h500" :src="image"></v-img>
                   </v-col>
                 </v-row>
               </v-card-text>
@@ -126,6 +126,7 @@
               <v-row justify="center">
                 <v-col lg="6">
                   <v-text-field
+                    autocomplete="off"
                     color="white"
                     filled
                     dense
@@ -135,6 +136,7 @@
                 </v-col>
                 <v-col lg="4">
                   <v-text-field
+                    autocomplete="off"
                     color="white"
                     filled
                     dense
@@ -148,7 +150,7 @@
                 <v-col lg="4" class="text-center">
                   <v-rating
                     background-color="grey darken-1"
-                    :value="rating"
+                    v-model="rating"
                     color="amber"
                     dense
                     half-increments
@@ -158,7 +160,7 @@
                 <v-col lg="4" class="text-center">
                   <v-rating
                     background-color="grey darken-1"
-                    :value="rating"
+                    v-model="priceRating"
                     full-icon="$"
                     empty-icon="$"
                     color="green"
@@ -174,25 +176,21 @@
                     filled
                     label="Review"
                     auto-grow
-                    :value="text"
+                    v-model="text"
                   ></v-textarea>
                 </v-col>
               </v-row>
 
               <v-row justify="center">
                 <v-col lg="8">
-                  <v-file-input
-                    accept="image/png, image/jpeg, image/jpg"
-                    placeholder="Choose an image"
-                    prepend-icon="mdi-camera"
-                    label="Image"
-                  ></v-file-input>
-                </v-col>
-              </v-row>
-
-              <v-row justify="end">
-                <v-col cols="2">
-                  <v-btn color="error" class="mb-2">Salvar</v-btn>
+                  <v-text-field
+                    autocomplete="off"
+                    color="white"
+                    filled
+                    dense
+                    label="Imagem"
+                    v-model="image"
+                  ></v-text-field>
                 </v-col>
               </v-row>
             </v-card>
@@ -205,6 +203,7 @@
 
 <script>
 import carousel from "@/components/Carousel.vue";
+import PostService from "@/services/postService.js";
 
 export default {
   name: "Reviews",
@@ -212,6 +211,7 @@ export default {
     carousel,
   },
   data: () => ({
+    token: "",
     isAdmin: false,
     dialog: false,
 
@@ -223,26 +223,100 @@ export default {
     priceRating: 1,
     rating: 0,
 
-    reviews: [
-      {
-        id: "1234567890",
-        image: "https://cdn.vuetifyjs.com/images/cards/cooking.png",
-        name: "Santa Monica Café Gourmet",
-        rating: 4.2,
-        priceRating: 4,
-        text: "Café muito bom",
-        author: "Luis Ernandes",
-      },
-      {
-        id: "1234567891",
-        image: "https://cdn.vuetifyjs.com/images/cards/cooking.png",
-        name: "Santa Monica Café Gourmet",
-        rating: 4.2,
-        priceRating: 1,
-        text: "Café muito bom",
-        author: "Luis Ernandes",
-      },
-    ],
+    reviews: [],
   }),
+  async mounted() {
+    await this.getReviews();
+    await this.getAdmin();
+  },
+  methods: {
+    async getReviews() {
+      let reviews = await PostService.getposts();
+      
+      if (reviews.length > 0) {
+        this.reviews = reviews;
+      } else {
+        this.reviews = [];
+      }
+    },
+    getData() {
+      return {
+        id: this.id,
+        image: this.image,
+        name: this.name,
+        text: this.text,
+        author: this.author,
+        priceRating: this.priceRating,
+        rating: this.rating,
+      };
+    },
+    async getToken() {
+      return localStorage.getItem("token");
+    },
+    async getAdmin() {
+      let token = await this.getToken();
+      if (token) {
+        this.token = token;
+        this.isAdmin = true;
+      }
+    },
+
+    setData(data) {
+      this.id = data._id;
+      this.image = data.image;
+      this.name = data.name;
+      this.text = data.text;
+      this.author = data.author;
+      this.priceRating = data.priceRating;
+      this.rating = data.rating;
+    },
+
+    setDataEmpty() {
+      this.id = "";
+      this.image = "";
+      this.name = "";
+      this.text = "";
+      this.author = "";
+      this.priceRating = 0;
+      this.rating = 0;
+    },
+
+    exitDialog() {
+      this.dialog = false;
+      this.setDataEmpty();
+    },
+
+    async savePost() {
+      let data = this.getData();
+
+      if (data.id) {
+        await PostService.editposts(data.id, data, this.token);
+        await this.getReviews();
+      } else {
+        await PostService.createposts(data, this.token);
+        await this.getReviews();
+      }
+
+      this.exitDialog();
+    },
+    async deletePost(id) {
+      await PostService.deleteposts(id, this.token);
+      await this.getReviews();
+    },
+    async editPost(data) {
+      this.setData(data);
+      this.dialog = true;
+    }
+  }
 };
 </script>
+
+<style>
+.reviewimage {
+  background-color: white;
+}
+
+.h500 {
+  height: 500px;
+}
+</style>

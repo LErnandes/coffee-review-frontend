@@ -3,9 +3,10 @@
     <v-carousel cycle show-arrows-on-hover hide-delimiters>
       <v-carousel-item
         v-for="item of items"
-        :key="item.id"
+        :key="item._id"
         :src="item.image"
-        :href="'#'+item.id"
+        :href="'#'+item._id"
+        style="background-color: grey;"
         ripple
       >
         <v-container fluid fill-height>

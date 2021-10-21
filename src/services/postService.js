@@ -1,23 +1,21 @@
 import api from "./api.js";
+import router from '../router/index.js';
 
 export default {
   async getposts() {
-    return await api.get("posts/get");
-  },
-
-  async getLastposts() {
-    return await api.get("posts/get/last");
+    let posts = await api.get("posts/");
+    return posts.data;
   },
 
   async createposts(data, token) {
     return await api
-      .post("posts/create", data, {
+      .post("posts/", data, {
         headers: {
           token,
         },
       })
       .catch(() => {
-        this.$router.push("login");
+        router.push("admin");
       });
   },
 
@@ -33,7 +31,7 @@ export default {
         },
       })
       .catch(() => {
-        this.$router.push("login");
+        router.push("admin");
       });
   },
 
@@ -45,7 +43,7 @@ export default {
         },
       })
       .catch(() => {
-        this.$router.push("login");
+        router.push("admin");
       });
   },
 };

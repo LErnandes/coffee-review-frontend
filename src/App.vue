@@ -47,7 +47,7 @@
       <router-view />
     </v-main>
 
-    <v-footer class="mt-15">
+    <v-footer class="mt-15" v-if="notLading">
       <v-col class="text-center" cols="12">
         {{ new Date().getFullYear() }} — <strong>Luis Ernandes</strong>
       </v-col>
