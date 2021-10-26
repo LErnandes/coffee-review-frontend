@@ -10,9 +10,9 @@
       <v-col
         v-for="review of reviews"
         :key="review._id"
-        cols="12"
-        sm="5"
-        lg="4"
+        cols="10"
+        sm="4"
+        lg="3"
         class="text-center"
       >
         <v-card :id="review._id" transition="fade-transition" class="mx-auto">
@@ -21,12 +21,12 @@
           <v-card-title>
             <v-row justify="center">
               <v-col lg="12">
-                <span class="text-h4 text-center font-weight-black">{{ review.name }}</span>
+                <span class="headline text-no-wrap text-center font-weight-bold">{{ review.name }}</span>
               </v-col>
             </v-row>
           </v-card-title>
 
-          <v-card-text class="text-h5 font-weight-bold">
+          <v-card-text class="text-h6 font-weight-bold">
             "{{ review.text }}"
           </v-card-text>
 
@@ -60,7 +60,7 @@
             <v-list-item>
               <v-row align="center">
                 <v-col class="text-start" cols="6" lg="8">
-                  <span class="title">{{ review.author }}</span>
+                  <span class="subtitle-1">{{ review.author }}</span>
                 </v-col>
 
                 <v-col v-if="isAdmin" cols="2">
