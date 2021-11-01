@@ -8,7 +8,7 @@
       </h1>
     </v-row>
     <v-row justify="center">
-      <h2 class="display-1">Contando as minhas experiencias com café ☕️</h2>
+      <h2 class="display-1 text-center">Contando as minhas experiências com café ☕️</h2>
     </v-row>
     <v-row justify="center">
       <v-btn href="/reviews" x-large color="error"> LER ARTIGOS! </v-btn>
