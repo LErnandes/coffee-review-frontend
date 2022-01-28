@@ -11,7 +11,7 @@ export default {
   name: "Lofi",
   data: () => ({
     videos: ["GA9GigGuf24", "-5KAN9_CzSA", "c0_ejQQcrwI", "wSEWdmmk_1o", "-9gEgshJUuY", "AqgtsfqnoTI", "twM7ulKpPjI"],
-    sourceUrl: "https://www.youtube-nocookie.com/embed/?controls=0&playlist="
+    sourceUrl: "https://www.youtube.com/watch?v=eMbgHd-9Y_0&ab_channel=TunableMusic"
   })
 };
 </script>
